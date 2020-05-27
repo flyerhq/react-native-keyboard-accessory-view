@@ -1,0 +1,44 @@
+{
+  "name": "example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "compile": "tsc -p .",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-native": "^0.62.2",
+    "react-native-safe-area-context": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.1",
+    "@babel/runtime": "^7.10.1",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "@types/jest": "^25.2.3",
+    "@types/react-native": "^0.62.12",
+    "@types/react-test-renderer": "^16.9.2",
+    "babel-jest": "^26.0.1",
+    "eslint": "^7.1.0",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "jest": "^26.0.1",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-test-renderer": "^16.13.1",
+    "typescript": "^3.9.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "@react-native-community",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["simple-import-sort"],
+  "root": true,
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none",
+          "requireLast": false
+        },
+        "singleline": {
+          "delimiter": "semi"
+        }
+      }
+    ],
+    "@typescript-eslint/no-use-before-define": "off",
+    "simple-import-sort/sort": [
+      "error",
+      { "groups": [["^\\u0000", "^@?\\w", "^[^.]", "^\\."]] }
+    ],
+    "sort-imports": "off"
+  }
+}

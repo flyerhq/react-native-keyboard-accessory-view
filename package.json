@@ -1,0 +1,78 @@
+{
+  "name": "react-native-keyboard-accessory-view",
+  "version": "1.0.0",
+  "description": "Keyboard accessory (sticky) view for your React Native app. Supports interactive dismiss.",
+  "homepage": "https://github.com/flyerhq/react-native-keyboard-accessory-view#readme",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p .",
+    "lint": "eslint .",
+    "prepare": "yarn compile",
+    "test": "jest",
+    "type-coverage": "type-coverage --is 100 --strict --ignore-catch --cache"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.1",
+    "@babel/runtime": "^7.10.1",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "@types/jest": "^25.2.3",
+    "@types/react-native": "^0.62.12",
+    "@types/react-test-renderer": "^16.9.2",
+    "babel-jest": "^26.0.1",
+    "eslint": "^7.1.0",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "jest": "^26.0.1",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react": "^16.13.1",
+    "react-native": "^0.62.2",
+    "react-native-safe-area-context": "^3.0.2",
+    "react-native-testing-library": "^2.0.0",
+    "react-test-renderer": "^16.13.1",
+    "type-coverage": "^2.7.0",
+    "typescript": "^3.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "^1.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/index.{ts,tsx}",
+      "!**/styles.{ts,tsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "preset": "react-native",
+    "setupFiles": [
+      "./jest/setup.ts"
+    ]
+  },
+  "typeCoverage": {
+    "is": 100
+  }
+}
