@@ -9,7 +9,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "react-native-keyboard-accessory-view": ["../src"]
+      "@flyerhq/react-native-keyboard-accessory-view": ["../src"]
     },
     "skipLibCheck": true,
     "strict": true,

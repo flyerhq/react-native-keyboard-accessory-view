@@ -1,9 +1,9 @@
-import React from 'react'
-import { ScrollView, StyleSheet, TextInput } from 'react-native'
 import {
   KeyboardAccessoryView,
   usePanResponder,
-} from 'react-native-keyboard-accessory-view'
+} from '@flyerhq/react-native-keyboard-accessory-view'
+import React from 'react'
+import { ScrollView, StyleSheet, TextInput } from 'react-native'
 
 const App = () => {
   const { panHandlers, positionY } = usePanResponder()
