@@ -4,46 +4,65 @@ import {
   Keyboard,
   KeyboardEvent,
   LayoutAnimation,
+  ScaledSize,
+  useWindowDimensions,
 } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const useKeyboardDimensions = () => {
-  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(
-    Dimensions.get('screen').height
-  )
+  const { bottom } = useSafeAreaInsets()
+  const { height } = useWindowDimensions()
+  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(height)
   const [keyboardHeight, setKeyboardHeight] = React.useState(0)
+  const [
+    keyboardSafeAreaBottomInset,
+    setKeyboardSafeAreaBottomInset,
+  ] = React.useState(0)
 
   React.useEffect(() => {
-    Keyboard.addListener('keyboardWillChangeFrame', updateDimensions)
+    Dimensions.addEventListener('change', handleDimensionsChange)
+    Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions)
 
     return () => {
+      Dimensions.removeEventListener('change', handleDimensionsChange)
       Keyboard.removeAllListeners('keyboardWillChangeFrame')
     }
   })
 
-  const updateDimensions = (event: KeyboardEvent) => {
-    const { height } = Dimensions.get('screen')
-    const { duration, easing, endCoordinates } = event
-
-    const newKeyboardHeight = height - endCoordinates.screenY
-
-    if (newKeyboardHeight === keyboardHeight) {
-      return
-    }
-
-    if (duration && easing) {
-      LayoutAnimation.configureNext({
-        // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
-        duration: duration > 10 ? duration : 10,
-        update: {
-          duration: duration > 10 ? duration : 10,
-          type: LayoutAnimation.Types[easing],
-        },
-      })
-    }
-
-    setKeyboardEndPositionY(endCoordinates.screenY)
-    setKeyboardHeight(newKeyboardHeight)
+  const handleDimensionsChange = (event: {
+    screen: ScaledSize
+    window: ScaledSize
+  }) => {
+    setKeyboardEndPositionY(event.window.height)
   }
 
-  return { keyboardEndPositionY, keyboardHeight }
+  const updateKeyboardDimensions = React.useCallback(
+    (event: KeyboardEvent) => {
+      const { duration, easing, endCoordinates } = event
+
+      const newKeyboardHeight = height - endCoordinates.screenY
+
+      if (newKeyboardHeight === keyboardHeight) {
+        return
+      }
+
+      if (duration && easing) {
+        LayoutAnimation.configureNext({
+          // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
+          duration: duration > 10 ? duration : 10,
+          update: {
+            duration: duration > 10 ? duration : 10,
+            type: LayoutAnimation.Types[easing],
+          },
+        })
+      }
+
+      setKeyboardEndPositionY(endCoordinates.screenY)
+      setKeyboardHeight(newKeyboardHeight)
+      setKeyboardSafeAreaBottomInset(newKeyboardHeight > 0 ? bottom : 0)
+    },
+    [bottom, height, keyboardHeight]
+  )
+
+  return { keyboardEndPositionY, keyboardHeight, keyboardSafeAreaBottomInset }
 }
