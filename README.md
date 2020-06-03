@@ -1,6 +1,6 @@
 # React Native Keyboard Accessory View
 
-![npm](https://img.shields.io/npm/v/@flyerhq/react-native-keyboard-accessory-view)
+[![npm](https://img.shields.io/npm/v/@flyerhq/react-native-keyboard-accessory-view)](https://www.npmjs.com/package/@flyerhq/react-native-keyboard-accessory-view)
 [![build](https://github.com/flyerhq/react-native-keyboard-accessory-view/workflows/build/badge.svg)](https://github.com/flyerhq/react-native-keyboard-accessory-view/actions?query=workflow%3Abuild)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e47e287f8fb1fbfffeeb/maintainability)](https://codeclimate.com/github/flyerhq/react-native-keyboard-accessory-view/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e47e287f8fb1fbfffeeb/test_coverage)](https://codeclimate.com/github/flyerhq/react-native-keyboard-accessory-view/test_coverage)
