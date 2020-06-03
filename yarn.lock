@@ -6375,10 +6375,10 @@ react-native-safe-area-context@^3.0.2:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.0.2.tgz#95dd7e56bc89bcc4f3f7bb5fada30c98420328b2"
   integrity sha512-x3yVMsxwe9GyvIkv0Q5jy2CWYN7VO0/CJTFGG5kSiMo8FFTQJbWtuWGANFqxDzEH5NEV7/SfK+qTgAh931KyUw==
 
-react-native-testing-library@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.0.0.tgz#0b2079e00b024108ab8f6331ce61417964f788bd"
-  integrity sha512-7pEAsr9rC1TZ9jYMeSb7YIea0g3gPIQE0IdnhzgsWKtSF9XBRHNb268HRCjI0kcRkBRJR4QgxOjMVPsKJNGhaw==
+react-native-testing-library@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.0.1.tgz#ff2aa9fd065f964ddae4e92c3e361b84276d236a"
+  integrity sha512-GyUn3G14TGXCH5g8szsMGneNfWR0Nxy03igQnljwYBun84iF9fyf9DZZp9iUrfyTVxII2VjbAFdBPFcKFXzHYQ==
   dependencies:
     pretty-format "^26.0.1"
 
