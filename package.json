@@ -1,12 +1,22 @@
 {
   "name": "@flyerhq/react-native-keyboard-accessory-view",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Keyboard accessory (sticky) view for your React Native app. Supports interactive dismiss on iOS.",
   "homepage": "https://github.com/flyerhq/react-native-keyboard-accessory-view#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
   "license": "MIT",
+  "keywords": [
+    "keyboard-accessory",
+    "keyboard",
+    "sticky",
+    "react-component",
+    "interactive",
+    "react-native",
+    "ios",
+    "android"
+  ],
   "files": [
     "lib"
   ],
