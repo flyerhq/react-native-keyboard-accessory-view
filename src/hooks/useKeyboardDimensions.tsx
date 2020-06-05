@@ -47,11 +47,13 @@ export const useKeyboardDimensions = () => {
       }
 
       if (duration && easing) {
+        // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
+        const animationDuration = Math.max(duration, 10)
+
         LayoutAnimation.configureNext({
-          // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
-          duration: duration > 10 ? duration : 10,
+          duration: animationDuration,
           update: {
-            duration: duration > 10 ? duration : 10,
+            duration: animationDuration,
             type: LayoutAnimation.Types[easing],
           },
         })

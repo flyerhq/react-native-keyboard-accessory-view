@@ -28,7 +28,7 @@ export const KeyboardAccessoryView = React.memo(
     const { onLayout, size } = useComponentSize()
     const { bottom, left, right } = useSafeAreaInsets()
     const deltaY = (panResponderPositionY ?? 0) - keyboardEndPositionY
-    const diff = deltaY > 0 ? deltaY : 0
+    const diff = Math.max(deltaY, 0)
     const { container, contentContainer } = styles({
       bottom,
       diff,
