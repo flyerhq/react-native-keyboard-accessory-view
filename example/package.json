@@ -23,7 +23,7 @@
     "@types/react-native": "^0.62.13",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^26.0.1",
-    "eslint": "^7.1.0",
+    "eslint": "^7.2.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.0.1",
     "metro-react-native-babel-preset": "^0.59.0",

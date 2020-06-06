@@ -9,6 +9,14 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+/**
+ * Utility hook used to calculate keyboard dimensions.
+ *
+ * ⚠️ You shouldn't use this hook on the same screen with `KeyboardAccessoryView` component, unexpected behavior might occur
+ * @returns `keyboardEndPositionY` Keyboard's top line Y position
+ * @returns `keyboardHeight` Keyboard's height
+ * @returns `keyboardSafeAreaBottomInset` Additional space keyboard has when opened on devices with a safe area
+ */
 export const useKeyboardDimensions = () => {
   const { bottom } = useSafeAreaInsets()
   const { height } = useWindowDimensions()
