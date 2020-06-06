@@ -15,6 +15,6 @@
     "strict": true,
     "target": "ESNext"
   },
-  "include": ["src", "App.tsx"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

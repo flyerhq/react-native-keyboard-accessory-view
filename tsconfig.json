@@ -9,7 +9,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./lib",
-    "removeComments": true,
     "sourceMap": true,
     "strict": true,
     "target": "ESNext"

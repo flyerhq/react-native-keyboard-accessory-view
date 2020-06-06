@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
 } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 interface Item {
   id: string
@@ -32,27 +33,29 @@ const App = () => {
   )
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        keyboardDismissMode='interactive'
-        contentContainerStyle={{
-          paddingBottom: contentBottomInset,
-        }}
-        scrollIndicatorInsets={{ bottom: contentBottomInset }}
-        showsHorizontalScrollIndicator={false}
-        {...panHandlers}
-      />
-      <KeyboardAccessoryView
-        onContentBottomInsetUpdate={setContentBottomInset}
-        panResponderPositionY={positionY}
-        style={styles.keyboardAccessoryView}
-      >
-        <TextInput style={styles.textInput} />
-      </KeyboardAccessoryView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={data}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          keyboardDismissMode='interactive'
+          contentContainerStyle={{
+            paddingBottom: contentBottomInset,
+          }}
+          scrollIndicatorInsets={{ bottom: contentBottomInset }}
+          showsHorizontalScrollIndicator={false}
+          {...panHandlers}
+        />
+        <KeyboardAccessoryView
+          onContentBottomInsetUpdate={setContentBottomInset}
+          panResponderPositionY={positionY}
+          style={styles.keyboardAccessoryView}
+        >
+          <TextInput style={styles.textInput} />
+        </KeyboardAccessoryView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 
