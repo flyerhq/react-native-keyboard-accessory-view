@@ -28,31 +28,19 @@ export const useKeyboardDimensions = () => {
   ] = React.useState(0)
 
   React.useEffect(() => {
-    Dimensions.addEventListener('change', handleDimensionsChange)
-    Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions)
-
-    return () => {
-      Dimensions.removeEventListener('change', handleDimensionsChange)
-      Keyboard.removeAllListeners('keyboardWillChangeFrame')
+    const handleDimensionsChange = (event: {
+      screen: ScaledSize
+      window: ScaledSize
+    }) => {
+      setKeyboardEndPositionY(event.window.height)
     }
-  })
 
-  const handleDimensionsChange = (event: {
-    screen: ScaledSize
-    window: ScaledSize
-  }) => {
-    setKeyboardEndPositionY(event.window.height)
-  }
-
-  const updateKeyboardDimensions = React.useCallback(
-    (event: KeyboardEvent) => {
+    const updateKeyboardDimensions = (event: KeyboardEvent) => {
       const { duration, easing, endCoordinates } = event
 
       const newKeyboardHeight = height - endCoordinates.screenY
 
-      if (newKeyboardHeight === keyboardHeight) {
-        return
-      }
+      if (newKeyboardHeight === keyboardHeight) return
 
       if (duration && easing) {
         // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
@@ -70,9 +58,16 @@ export const useKeyboardDimensions = () => {
       setKeyboardEndPositionY(endCoordinates.screenY)
       setKeyboardHeight(newKeyboardHeight)
       setKeyboardSafeAreaBottomInset(newKeyboardHeight > 0 ? bottom : 0)
-    },
-    [bottom, height, keyboardHeight]
-  )
+    }
+
+    Dimensions.addEventListener('change', handleDimensionsChange)
+    Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions)
+
+    return () => {
+      Dimensions.removeEventListener('change', handleDimensionsChange)
+      Keyboard.removeAllListeners('keyboardWillChangeFrame')
+    }
+  })
 
   return { keyboardEndPositionY, keyboardHeight, keyboardSafeAreaBottomInset }
 }
