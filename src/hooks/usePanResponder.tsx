@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PanResponder, Platform } from 'react-native'
+import { Animated, PanResponder, Platform } from 'react-native'
 
 /**
  * Returns `panHandlers` used to calculate Y finger position.
@@ -14,18 +14,19 @@ import { PanResponder, Platform } from 'react-native'
  * <ScrollView {...panHandlers} />
  */
 export const usePanResponder = () => {
-  const [positionY, setPositionY] = React.useState(0)
+  const positionY = React.useRef(new Animated.Value(0)).current
 
   // Ignore PanResponder callbacks from the coverage since it is hard to simulate touches in a unit test
   /* istanbul ignore next */
   const panResponder = React.useRef(
     PanResponder.create({
-      onPanResponderMove: (_, gestureState) => {
-        setPositionY(gestureState.moveY)
-      },
+      onPanResponderMove: Animated.event([null, { moveY: positionY }], {
+        useNativeDriver: false,
+      }),
       onPanResponderEnd: () => {
-        // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
-        setTimeout(() => setPositionY(0), 10)
+        setTimeout(() => {
+          positionY.setValue(0)
+        }, 10)
       },
     })
   ).current

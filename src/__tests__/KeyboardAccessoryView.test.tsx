@@ -35,21 +35,4 @@ describe('keyboard accessory view', () => {
     expect(container.props.style).toHaveProperty('bottom', 346)
     expect(handleContentBottomInsetUpdate).toHaveBeenLastCalledWith(312)
   })
-
-  it('sticks to the keyboard top with an open keyboard and active pan', () => {
-    expect.assertions(2)
-    const handleContentBottomInsetUpdate = jest.fn()
-    const { getByTestId } = render(
-      <KeyboardAccessoryView
-        onContentBottomInsetUpdate={handleContentBottomInsetUpdate}
-        panResponderPositionY={596}
-      />
-    )
-    act(() => {
-      emitter.emit('keyboardWillChangeFrame', keyboardOpenEvent)
-    })
-    const container = getByTestId('container')
-    expect(container.props.style).toHaveProperty('bottom', 300)
-    expect(handleContentBottomInsetUpdate).toHaveBeenLastCalledWith(312)
-  })
 })

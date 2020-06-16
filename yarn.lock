@@ -1716,10 +1716,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^25.2.3":
-  version "25.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.3.tgz#33d27e4c4716caae4eced355097a47ad363fdcaf"
-  integrity sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==
+"@types/jest@^26.0.0":
+  version "26.0.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.0.tgz#a6d7573dffa9c68cbbdf38f2e0de26f159e11134"
+  integrity sha512-/yeMsH9HQ1RLORlXAwoLXe8S98xxvhNtUz3yrgrwbaxYjT+6SFPZZRksmRKRA6L5vsUtSHeN71viDOTTyYAD+g==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -6388,15 +6388,15 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-native-safe-area-context@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.0.2.tgz#95dd7e56bc89bcc4f3f7bb5fada30c98420328b2"
-  integrity sha512-x3yVMsxwe9GyvIkv0Q5jy2CWYN7VO0/CJTFGG5kSiMo8FFTQJbWtuWGANFqxDzEH5NEV7/SfK+qTgAh931KyUw==
+react-native-safe-area-context@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.0.5.tgz#3dd9bf2fea3b51f894b9849f11108ac303bbefe5"
+  integrity sha512-cLZtHvzm/tdCTCOCgNRUsnl9ma8MozE9vtxHQVftuY6hRt+esCBdXA5jXcuCaCj+yUe4Akw+c5BPFNUF5vOTjQ==
 
-react-native-testing-library@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.0.1.tgz#ff2aa9fd065f964ddae4e92c3e361b84276d236a"
-  integrity sha512-GyUn3G14TGXCH5g8szsMGneNfWR0Nxy03igQnljwYBun84iF9fyf9DZZp9iUrfyTVxII2VjbAFdBPFcKFXzHYQ==
+react-native-testing-library@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.1.0.tgz#820a300dcae70d3da64813b816d208a14ab05f19"
+  integrity sha512-cBZIQ60XzT8pN5XNcvI5OE4ADej43pT43jLynKIrQRnBuw5cIJotN+xHyLxyGcv4WdiCCONmyK3yhIOXV8PTyQ==
   dependencies:
     pretty-format "^26.0.1"
 
@@ -7537,10 +7537,10 @@ tr46@^2.0.2:
   dependencies:
     punycode "^2.1.1"
 
-ts-lib-utils@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/ts-lib-utils/-/ts-lib-utils-2.7.1.tgz#c95ac1cde845a0a5ba1fe30460d93ed5ed6a54f9"
-  integrity sha512-d4e3En3ksgXYLdhCMu40tVRGUVED/oRygbfo7i5MTooTzdO3KM0cCcbaAqFwXmsxLEF5BKnCptW8DWDiJhK1DQ==
+ts-lib-utils@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/ts-lib-utils/-/ts-lib-utils-2.7.2.tgz#8abd71d3665238422c7e342422f43030bf21bb6b"
+  integrity sha512-SBOsyeNB8ECoSQkwgYaecn2yVIY7WCFkcfzXIu0iGyg6gCC5bXGr+jwBbDVnUjAfN0MOI3J66gVLdnv/GYak3g==
   dependencies:
     glob "7"
     tslib "1 || 2"
@@ -7588,23 +7588,23 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-type-coverage-core@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/type-coverage-core/-/type-coverage-core-2.7.1.tgz#1512fc4bd2c0e432eaa466cd09d551592262d15f"
-  integrity sha512-Ki2EUe1+U8ds2TBGmBpZ9RARZa+AbHT8UOemmse3HIZky6n8eScaPiXP7HlaD8dMMf+nv0cU+JiKzQC1o4DoMw==
+type-coverage-core@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/type-coverage-core/-/type-coverage-core-2.7.2.tgz#61dd29c7711e84cbce1004bce8b866a80a3512df"
+  integrity sha512-8g+449qCsA7LyWTaubzK0m6zLotyBO7rX5WDktAelLFdE6rWpMQ//ake+OWrZpdzWTijiFi/Jl8BlKO2uX7A1Q==
   dependencies:
     minimatch "3"
-    ts-lib-utils "^2.7.1"
+    ts-lib-utils "^2.7.2"
     tslib "1 || 2"
     tsutils "3"
 
-type-coverage@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/type-coverage/-/type-coverage-2.7.1.tgz#10e0d6d0c532b3637dd3d46bed3e29a06c0daa55"
-  integrity sha512-gYgCbFnm048Sy3VxD/3yI5mQDsrL1sFu3eXAju70Y+hm7K8/YiFPuL6F7nDTLvxVjXPTxr20CaY1HBT3TcOdgw==
+type-coverage@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/type-coverage/-/type-coverage-2.7.2.tgz#e2ea2b033668b5076d5f3a23a703907689748353"
+  integrity sha512-duKK/Zcpel52a3hkbw5Qz+QOzWRAnKzkop368TvAcxwbiIV2dBgdlimeA5oN90JrkCKvDBk/cFWMgOkO+szsJA==
   dependencies:
     minimist "1"
-    type-coverage-core "^2.7.1"
+    type-coverage-core "^2.7.2"
 
 type-detect@4.0.8:
   version "4.0.8"
