@@ -12,21 +12,21 @@
   },
   "dependencies": {
     "react": "^16.13.1",
-    "react-native": "^0.63.1",
+    "react-native": "^0.63.2",
     "react-native-safe-area-context": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/runtime": "^7.10.5",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@types/jest": "^26.0.5",
-    "@types/react-native": "^0.63.1",
+    "@types/jest": "^26.0.7",
+    "@types/react-native": "^0.63.2",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^26.1.0",
     "eslint": "^7.5.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.1.0",
-    "metro-react-native-babel-preset": "^0.60.0",
+    "metro-react-native-babel-preset": "^0.61.0",
     "react-test-renderer": "^16.13.1",
     "typescript": "^3.9.7"
   },

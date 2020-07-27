@@ -5,7 +5,7 @@ import { useComponentSize, useKeyboardDimensions } from './hooks'
 import styles from './styles'
 
 interface Props {
-  children?: JSX.Element | JSX.Element[]
+  children?: React.ReactNode
   contentContainerStyle?: StyleProp<ViewStyle>
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   panResponderPositionY?: Animated.Value
