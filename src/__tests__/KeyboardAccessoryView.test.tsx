@@ -1,6 +1,6 @@
+import { act, render } from '@testing-library/react-native'
 import React from 'react'
 import { NativeEventEmitter } from 'react-native'
-import { act, render } from 'react-native-testing-library'
 import { keyboardOpenEvent } from '../../jest/fixtures'
 import { KeyboardAccessoryView } from '../KeyboardAccessoryView'
 
