@@ -11,7 +11,7 @@ const emitter = new NativeEventEmitter()
 
 describe('useKeyboardDimensions', () => {
   it('returns correct dimensions', () => {
-    expect.assertions(7)
+    expect.assertions(5)
     jest.spyOn(Keyboard, 'removeAllListeners')
     const { result, unmount } = renderHook(() => useKeyboardDimensions())
     act(() => {
@@ -19,13 +19,11 @@ describe('useKeyboardDimensions', () => {
     })
     expect(result.current.keyboardEndPositionY).toStrictEqual(550)
     expect(result.current.keyboardHeight).toStrictEqual(346)
-    expect(result.current.keyboardSafeAreaBottomInset).toStrictEqual(34)
     act(() => {
       emitter.emit('keyboardWillChangeFrame', keyboardHideEvent)
     })
     expect(result.current.keyboardEndPositionY).toStrictEqual(896)
     expect(result.current.keyboardHeight).toStrictEqual(0)
-    expect(result.current.keyboardSafeAreaBottomInset).toStrictEqual(0)
     unmount()
     expect(Keyboard.removeAllListeners).toHaveBeenCalledWith(
       'keyboardWillChangeFrame'
@@ -33,7 +31,7 @@ describe('useKeyboardDimensions', () => {
   })
 
   it('returns correct dimensions with no animation duration', () => {
-    expect.assertions(3)
+    expect.assertions(2)
     const event = {
       ...keyboardOpenEvent,
       duration: 0,
@@ -44,11 +42,10 @@ describe('useKeyboardDimensions', () => {
     })
     expect(result.current.keyboardEndPositionY).toStrictEqual(550)
     expect(result.current.keyboardHeight).toStrictEqual(346)
-    expect(result.current.keyboardSafeAreaBottomInset).toStrictEqual(34)
   })
 
   it('skips dimensions update if keyboard height does not change', () => {
-    expect.assertions(3)
+    expect.assertions(2)
     const event = {
       ...keyboardOpenEvent,
       endCoordinates: {
@@ -62,7 +59,6 @@ describe('useKeyboardDimensions', () => {
     })
     expect(result.current.keyboardEndPositionY).toStrictEqual(896)
     expect(result.current.keyboardHeight).toStrictEqual(0)
-    expect(result.current.keyboardSafeAreaBottomInset).toStrictEqual(0)
   })
 
   it('sets correct keyboardEndPositionY when device orientation changes', () => {

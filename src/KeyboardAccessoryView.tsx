@@ -7,8 +7,11 @@ import styles from './styles'
 interface Props {
   children?: React.ReactNode
   contentContainerStyle?: StyleProp<ViewStyle>
+  contentOffsetKeyboardClosed?: number
+  contentOffsetKeyboardOpened?: number
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   panResponderPositionY?: Animated.Value
+  spaceBetweenKeyboardAndAccessoryView?: number
   style?: StyleProp<ViewStyle>
 }
 
@@ -16,15 +19,14 @@ export const KeyboardAccessoryView = React.memo(
   ({
     children,
     contentContainerStyle,
+    contentOffsetKeyboardClosed,
+    contentOffsetKeyboardOpened,
     onContentBottomInsetUpdate,
     panResponderPositionY,
+    spaceBetweenKeyboardAndAccessoryView,
     style,
   }: Props) => {
-    const {
-      keyboardEndPositionY,
-      keyboardHeight,
-      keyboardSafeAreaBottomInset,
-    } = useKeyboardDimensions()
+    const { keyboardEndPositionY, keyboardHeight } = useKeyboardDimensions()
     const { onLayout, size } = useComponentSize()
     const { bottom, left, right } = useSafeAreaInsets()
     const deltaY = Animated.subtract(
@@ -40,11 +42,17 @@ export const KeyboardAccessoryView = React.memo(
 
     const updateContentBottomInset = React.useCallback(() => {
       onContentBottomInsetUpdate?.(
-        size.height + keyboardHeight - keyboardSafeAreaBottomInset
+        size.height +
+          keyboardHeight -
+          (keyboardHeight > 0
+            ? bottom - (contentOffsetKeyboardOpened ?? 0)
+            : -(contentOffsetKeyboardClosed ?? 0))
       )
     }, [
+      bottom,
+      contentOffsetKeyboardClosed,
+      contentOffsetKeyboardOpened,
       keyboardHeight,
-      keyboardSafeAreaBottomInset,
       onContentBottomInsetUpdate,
       size,
     ])
@@ -56,7 +64,9 @@ export const KeyboardAccessoryView = React.memo(
         style={StyleSheet.flatten([
           {
             bottom: Animated.subtract(
-              keyboardHeight,
+              keyboardHeight > 0
+                ? keyboardHeight + (spaceBetweenKeyboardAndAccessoryView ?? 0)
+                : 0,
               deltaY.interpolate({
                 inputRange: [0, Number.MAX_SAFE_INTEGER],
                 outputRange: [0, Number.MAX_SAFE_INTEGER],

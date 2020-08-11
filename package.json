@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-keyboard-accessory-view",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Keyboard accessory (sticky) view for your React Native app. Supports interactive dismiss on iOS.",
   "homepage": "https://github.com/flyerhq/react-native-keyboard-accessory-view#readme",
   "main": "lib/index.js",
@@ -15,7 +15,8 @@
     "interactive",
     "react-native",
     "ios",
-    "android"
+    "android",
+    "typescript"
   ],
   "files": [
     "lib"
@@ -37,17 +38,17 @@
     "@testing-library/react-hooks": "^3.4.1",
     "@testing-library/react-native": "^7.0.1",
     "@types/jest": "^26.0.9",
-    "@types/react-native": "^0.63.4",
+    "@types/react-native": "^0.63.6",
     "@types/react-test-renderer": "^16.9.3",
-    "babel-jest": "^26.2.2",
+    "babel-jest": "^26.3.0",
     "eslint": "^7.6.0",
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
-    "jest": "^26.2.2",
-    "metro-react-native-babel-preset": "^0.61.0",
+    "jest": "^26.3.0",
+    "metro-react-native-babel-preset": "^0.62.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
-    "react-native-safe-area-context": "^3.1.3",
+    "react-native-safe-area-context": "^3.1.4",
     "react-test-renderer": "^16.13.1",
     "type-coverage": "^2.9.0",
     "typescript": "^3.9.7"
