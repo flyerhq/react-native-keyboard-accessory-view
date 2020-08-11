@@ -58,17 +58,33 @@ Let's break it down.
 
 Additionally, `KeyboardAccessoryView` provides a `onContentBottomInsetUpdate` callback which can be used to position scrollable content above the keyboard.
 
+### Handling wrong offsets
+
+Sometimes when you use a tab bar or similar component, the accessory view does not work correctly. In order to fix this, you need to use a combination of next props: `contentContainerStyle`, `contentOffsetKeyboardClosed`, `contentOffsetKeyboardOpened` and `spaceBetweenKeyboardAndAccessoryView`.
+
+First of all, you need to decide if you need this extra safe area margin at the bottom (as you can see the size of the accessory view is different when the keyboard is open and closed, that's because when it's closed, safe area bottom margin is added). If you have, for example, a tab bar, most likely you don't need this margin, because safe is area already occupied by the tab bar. To remove it pass this style: `contentContainerStyle={{ marginBottom: 0 }}`.
+
+When the first step is done, you need to check if you have a space between the accessory view and the keyboard, when the latter is opened. If you do, pass the offset to the `spaceBetweenKeyboardAndAccessoryView` prop. Usually, it can be calculated based on a bottom safe area inset from [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context) and/or the height of the tab bar, for example.
+
+Lastly, validate if the content above the accessory view has correct offsets, if no, you can adjust it using `contentOffsetKeyboardClosed` and `contentOffsetKeyboardOpened` props. Sometimes offsets are correct for the one keyboard state, use one of these props if this is the case. As with the `spaceBetweenKeyboardAndAccessoryView` prop, offsets are calculated based on the bottom safe area inset and/or the height of the tab bar, for example. Also, don't forget to check a scroll indicator. Sometimes you need to subtract or add something to the `contentBottomInset` value of `scrollIndicatorInsets` prop.
+
 ## Props
 
 ### `KeyboardAccessoryView`
 
-- `style` (optional) - accepts [View Style Props](https://reactnative.dev/docs/view-style-props). Used to style the view which includes both content container and safe area insets. A common use case will be setting `backgroundColor` so the content container and safe area insets are of the matching color.
+- `style` (optional) - accepts [View Style Props](https://reactnative.dev/docs/view-style-props). Use to style the view which includes both content container and safe area insets. A common use case will be setting `backgroundColor` so the content container and safe area insets are of the matching color.
 
-- `contentContainerStyle` (optional) - accepts [View Style Props](https://reactnative.dev/docs/view-style-props). Used to style the content container, but not the safe area insets.
+- `contentContainerStyle` (optional) - accepts [View Style Props](https://reactnative.dev/docs/view-style-props). Use to style the content container, but not the safe area insets.
 
 - `onContentBottomInsetUpdate` (optional) - accepts a function with a number parameter. See the description above.
 
 - `panResponderPositionY` (optional) - accepts a number. See the description above.
+
+- `contentOffsetKeyboardClosed` (optional) - accepts a number. Use to adjust content offset when the keyboard is open. Read more [here](#Handling-wrong-offsets).
+
+- `contentOffsetKeyboardOpened` (optional) - accepts a number. Use to adjust content offset when the keyboard is closed. Read more [here](#Handling-wrong-offsets).
+
+- `spaceBetweenKeyboardAndAccessoryView` (optional) - accepts a number. Use to adjust space between the accessory view and the keyboard, when the latter is open. Read more [here](#Handling-wrong-offsets).
 
 ## License
 
