@@ -38,7 +38,7 @@
     "@testing-library/react-hooks": "^3.4.1",
     "@testing-library/react-native": "^7.0.1",
     "@types/jest": "^26.0.9",
-    "@types/react-native": "^0.63.6",
+    "@types/react-native": "^0.63.7",
     "@types/react-test-renderer": "^16.9.3",
     "babel-jest": "^26.3.0",
     "eslint": "^7.6.0",
