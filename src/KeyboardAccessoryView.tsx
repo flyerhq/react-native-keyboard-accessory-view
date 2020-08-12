@@ -43,10 +43,10 @@ export const KeyboardAccessoryView = React.memo(
     const updateContentBottomInset = React.useCallback(() => {
       onContentBottomInsetUpdate?.(
         size.height +
-          keyboardHeight -
+          keyboardHeight +
           (keyboardHeight > 0
-            ? bottom - (contentOffsetKeyboardOpened ?? 0)
-            : -(contentOffsetKeyboardClosed ?? 0))
+            ? (contentOffsetKeyboardOpened ?? 0) - bottom
+            : contentOffsetKeyboardClosed ?? 0)
       )
     }, [
       bottom,
