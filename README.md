@@ -86,6 +86,19 @@ Lastly, validate if the content above the accessory view has correct offsets, if
 
 - `spaceBetweenKeyboardAndAccessoryView` (optional) - accepts a number. Use to adjust space between the accessory view and the keyboard, when the latter is open. Read more [here](#handling-wrong-offsets).
 
+- `renderBackgroundElement` (optional) - you can provide a render function to attach an extra node to the wrapper. This is useful when you want to have a custom element as the background (eg. `BlurView`):
+```tsx
+<KeyboardAccessoryView
+  renderBackgroundElement={() =>
+    <BlurView
+      style={StyleSheet.absoluteFillObject}
+    />
+  }
+>
+  <TextInput />
+</KeyboardAccessoryView>
+```
+
 ## License
 
 [MIT](LICENSE)

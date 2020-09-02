@@ -13,6 +13,7 @@ interface Props {
   panResponderPositionY?: Animated.Value
   spaceBetweenKeyboardAndAccessoryView?: number
   style?: StyleProp<ViewStyle>
+  renderBackgroundElement?: () => React.ReactNode
 }
 
 export const KeyboardAccessoryView = React.memo(
@@ -25,6 +26,7 @@ export const KeyboardAccessoryView = React.memo(
     panResponderPositionY,
     spaceBetweenKeyboardAndAccessoryView,
     style,
+    renderBackgroundElement,
   }: Props) => {
     const { keyboardEndPositionY, keyboardHeight } = useKeyboardDimensions()
     const { onLayout, size } = useComponentSize()
@@ -79,6 +81,8 @@ export const KeyboardAccessoryView = React.memo(
         ])}
         testID='container'
       >
+        {typeof renderBackgroundElement === 'function' &&
+          renderBackgroundElement()}
         <View
           onLayout={onLayout}
           style={StyleSheet.flatten([contentContainer, contentContainerStyle])}
