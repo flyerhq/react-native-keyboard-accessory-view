@@ -84,6 +84,8 @@ Lastly, validate if the content above the accessory view has correct offsets, if
 
 - `contentOffsetKeyboardOpened` (optional) - accepts a number. Use to adjust content offset when the keyboard is closed. Read more [here](#handling-wrong-offsets).
 
+- `renderBackgroundNode` (optional) - accepts a function returning React node. This is useful when you want to have a custom node as a background (e.g. `<ImageBackground style={StyleSheet.absoluteFill} />` ). Remember about absolute positioning.
+
 - `spaceBetweenKeyboardAndAccessoryView` (optional) - accepts a number. Use to adjust space between the accessory view and the keyboard, when the latter is open. Read more [here](#handling-wrong-offsets).
 
 ## License
