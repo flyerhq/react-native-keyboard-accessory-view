@@ -36,13 +36,13 @@ const App = () => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <FlatList
-          data={data}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          keyboardDismissMode='interactive'
           contentContainerStyle={{
             paddingBottom: contentBottomInset,
           }}
+          data={data}
+          keyboardDismissMode='interactive'
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
           scrollIndicatorInsets={{ bottom: contentBottomInset }}
           showsHorizontalScrollIndicator={false}
           {...panHandlers}
@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   textInput: {
-    flex: 1,
-    paddingHorizontal: 16,
     color: 'white',
+    flex: 1,
     height: 50,
+    paddingHorizontal: 16,
   },
 })
 

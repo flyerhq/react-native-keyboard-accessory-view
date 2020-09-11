@@ -16,11 +16,11 @@
     "react-native-safe-area-context": "^3.1.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.5",
+    "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.13",
-    "@types/react-native": "^0.63.7",
+    "@types/react-native": "^0.63.18",
     "@types/react-test-renderer": "^16.9.3",
     "babel-jest": "^26.3.0",
     "eslint": "^7.8.1",
