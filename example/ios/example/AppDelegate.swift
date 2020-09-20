@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
     #endif
   }
 
-
   private func initializeFlipper(with application: UIApplication) {
     #if DEBUG
     let client = FlipperClient.shared()
