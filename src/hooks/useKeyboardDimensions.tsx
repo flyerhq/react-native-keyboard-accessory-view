@@ -1,11 +1,14 @@
-import * as React from 'react'
+import * as React from 'react';
 import {
   Dimensions,
   Keyboard,
   KeyboardEvent,
   LayoutAnimation,
   ScaledSize,
-} from 'react-native'
+  Platform,
+  EmitterSubscription
+} from 'react-native';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 /**
  * Utility hook used to calculate keyboard dimensions.
@@ -15,52 +18,47 @@ import {
  * @returns `keyboardHeight` Keyboard's height
  */
 export const useKeyboardDimensions = () => {
-  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(
-    Dimensions.get('window').height
-  )
-  const [keyboardHeight, setKeyboardHeight] = React.useState(0)
+  const frame = useSafeAreaFrame();
+  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(frame.height);
+  const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
   React.useEffect(() => {
-    const handleDimensionsChange = (event: {
-      screen: ScaledSize
-      window: ScaledSize
-    }) => {
-      setKeyboardEndPositionY(event.window.height)
-    }
-
     const updateKeyboardDimensions = (event: KeyboardEvent) => {
-      const { height } = Dimensions.get('window')
-      const { duration, easing, endCoordinates } = event
+      const { duration, easing, endCoordinates } = event;
 
-      const newKeyboardHeight = height - endCoordinates.screenY
+      const newKeyboardHeight = frame.height - endCoordinates.screenY;
 
-      if (newKeyboardHeight === keyboardHeight) return
+      if (newKeyboardHeight === keyboardHeight) return;
 
       if (duration && easing) {
         // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
-        const animationDuration = Math.max(duration, 10)
+        const animationDuration = Math.max(duration, 10);
 
         LayoutAnimation.configureNext({
           duration: animationDuration,
           update: {
             duration: animationDuration,
-            type: LayoutAnimation.Types[easing],
-          },
-        })
+            type: LayoutAnimation.Types[easing]
+          }
+        });
       }
 
-      setKeyboardEndPositionY(endCoordinates.screenY)
-      setKeyboardHeight(newKeyboardHeight)
+      setKeyboardEndPositionY(endCoordinates.screenY);
+      setKeyboardHeight(newKeyboardHeight);
+    };
+
+    const listeners = new Array<EmitterSubscription>();
+    if (Platform.OS === 'ios') {
+      listeners.push(Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions));
+    } else {
+      listeners.push(
+        Keyboard.addListener('keyboardDidHide', updateKeyboardDimensions),
+        Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
+      );
     }
 
-    Dimensions.addEventListener('change', handleDimensionsChange)
-    Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions)
+    return () => listeners.forEach((listener) => listener.remove());
+  });
 
-    return () => {
-      Dimensions.removeEventListener('change', handleDimensionsChange)
-      Keyboard.removeAllListeners('keyboardWillChangeFrame')
-    }
-  })
-
-  return { keyboardEndPositionY, keyboardHeight }
-}
+  return { keyboardEndPositionY, keyboardHeight };
+};
