@@ -42,14 +42,28 @@ export const size = {
 }
 
 export const onLayoutEvent: LayoutChangeEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: undefined,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: jest.fn(),
+  isPropagationStopped: jest.fn(),
+  isTrusted: false,
   nativeEvent: {
     layout: { x: 0, y: 0, ...size },
   },
+  persist: jest.fn(),
+  preventDefault: jest.fn(),
+  stopPropagation: jest.fn(),
+  target: undefined,
+  timeStamp: 0,
+  type: 'type',
 }
 
 export const scaledSize: ScaledSize = {
-  width: 896,
+  fontScale: 1,
   height: 414,
   scale: 2,
-  fontScale: 1,
+  width: 896,
 }
