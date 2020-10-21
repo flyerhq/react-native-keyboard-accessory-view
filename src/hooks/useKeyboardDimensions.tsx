@@ -1,23 +1,27 @@
 import * as React from 'react'
 import {
   Dimensions,
+  EmitterSubscription,
   Keyboard,
   KeyboardEvent,
   LayoutAnimation,
+  Platform,
   ScaledSize,
 } from 'react-native'
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
 
 /**
  * Utility hook used to calculate keyboard dimensions.
+ *
+ * @param `useListenersOnAndroid` Will register keyboard listeners for Android
  *
  * ⚠️ You shouldn't use this hook on the same screen with `KeyboardAccessoryView` component, unexpected behavior might occur
  * @returns `keyboardEndPositionY` Keyboard's top line Y position
  * @returns `keyboardHeight` Keyboard's height
  */
-export const useKeyboardDimensions = () => {
-  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(
-    Dimensions.get('window').height
-  )
+export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
+  const { height } = useSafeAreaFrame()
+  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(height)
   const [keyboardHeight, setKeyboardHeight] = React.useState(0)
 
   React.useEffect(() => {
@@ -28,8 +32,12 @@ export const useKeyboardDimensions = () => {
       setKeyboardEndPositionY(event.window.height)
     }
 
+    const resetKeyboardDimensions = () => {
+      setKeyboardEndPositionY(height)
+      setKeyboardHeight(0)
+    }
+
     const updateKeyboardDimensions = (event: KeyboardEvent) => {
-      const { height } = Dimensions.get('window')
       const { duration, easing, endCoordinates } = event
 
       const newKeyboardHeight = height - endCoordinates.screenY
@@ -54,11 +62,26 @@ export const useKeyboardDimensions = () => {
     }
 
     Dimensions.addEventListener('change', handleDimensionsChange)
-    Keyboard.addListener('keyboardWillChangeFrame', updateKeyboardDimensions)
+
+    const listeners: EmitterSubscription[] = []
+
+    if (Platform.OS === 'android' && useListenersOnAndroid) {
+      listeners.push(
+        Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
+        Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
+      )
+    } else {
+      listeners.push(
+        Keyboard.addListener(
+          'keyboardWillChangeFrame',
+          updateKeyboardDimensions
+        )
+      )
+    }
 
     return () => {
       Dimensions.removeEventListener('change', handleDimensionsChange)
-      Keyboard.removeAllListeners('keyboardWillChangeFrame')
+      listeners.forEach((listener) => listener.remove())
     }
   })
 

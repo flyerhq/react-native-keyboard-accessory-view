@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { Keyboard, NativeEventEmitter } from 'react-native'
+import { NativeEventEmitter } from 'react-native'
 import {
   keyboardHideEvent,
   keyboardOpenEvent,
@@ -11,8 +11,7 @@ const emitter = new NativeEventEmitter()
 
 describe('useKeyboardDimensions', () => {
   it('returns correct dimensions', () => {
-    expect.assertions(5)
-    jest.spyOn(Keyboard, 'removeAllListeners')
+    expect.assertions(4)
     const { result, unmount } = renderHook(() => useKeyboardDimensions())
     act(() => {
       emitter.emit('keyboardWillChangeFrame', keyboardOpenEvent)
@@ -25,9 +24,6 @@ describe('useKeyboardDimensions', () => {
     expect(result.current.keyboardEndPositionY).toStrictEqual(896)
     expect(result.current.keyboardHeight).toStrictEqual(0)
     unmount()
-    expect(Keyboard.removeAllListeners).toHaveBeenCalledWith(
-      'keyboardWillChangeFrame'
-    )
   })
 
   it('returns correct dimensions with no animation duration', () => {
@@ -71,5 +67,25 @@ describe('useKeyboardDimensions', () => {
       })
     })
     expect(result.current.keyboardEndPositionY).toStrictEqual(414)
+  })
+
+  it('uses listeners on Android', () => {
+    expect.assertions(4)
+    jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+      OS: 'android',
+      select: jest.fn(),
+    }))
+    const { result, unmount } = renderHook(() => useKeyboardDimensions(true))
+    act(() => {
+      emitter.emit('keyboardDidShow', keyboardOpenEvent)
+    })
+    expect(result.current.keyboardEndPositionY).toStrictEqual(550)
+    expect(result.current.keyboardHeight).toStrictEqual(346)
+    act(() => {
+      emitter.emit('keyboardDidHide', keyboardHideEvent)
+    })
+    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
+    expect(result.current.keyboardHeight).toStrictEqual(0)
+    unmount()
   })
 })
