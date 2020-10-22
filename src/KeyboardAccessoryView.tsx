@@ -9,9 +9,9 @@ interface Props {
   contentContainerStyle?: StyleProp<ViewStyle>
   contentOffsetKeyboardClosed?: number
   contentOffsetKeyboardOpened?: number
-  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   panResponderPositionY?: Animated.Value
   renderBackgroundNode?: () => React.ReactNode
+  renderScrollable: () => React.ReactNode
   spaceBetweenKeyboardAndAccessoryView?: number
   style?: StyleProp<ViewStyle>
   useListenersOnAndroid?: boolean
@@ -23,9 +23,9 @@ export const KeyboardAccessoryView = React.memo(
     contentContainerStyle,
     contentOffsetKeyboardClosed,
     contentOffsetKeyboardOpened,
-    onContentBottomInsetUpdate,
     panResponderPositionY,
     renderBackgroundNode,
+    renderScrollable,
     spaceBetweenKeyboardAndAccessoryView,
     style,
     useListenersOnAndroid,
@@ -39,6 +39,14 @@ export const KeyboardAccessoryView = React.memo(
       panResponderPositionY ?? new Animated.Value(0),
       keyboardEndPositionY
     )
+
+    const offset =
+      size.height +
+      keyboardHeight +
+      (keyboardHeight > 0
+        ? (contentOffsetKeyboardOpened ?? 0) - bottom
+        : contentOffsetKeyboardClosed ?? 0)
+
     const { container, contentContainer } = styles({
       bottom,
       keyboardHeight,
@@ -46,53 +54,40 @@ export const KeyboardAccessoryView = React.memo(
       right,
     })
 
-    const updateContentBottomInset = React.useCallback(() => {
-      onContentBottomInsetUpdate?.(
-        size.height +
-          keyboardHeight +
-          (keyboardHeight > 0
-            ? (contentOffsetKeyboardOpened ?? 0) - bottom
-            : contentOffsetKeyboardClosed ?? 0)
-      )
-    }, [
-      bottom,
-      contentOffsetKeyboardClosed,
-      contentOffsetKeyboardOpened,
-      keyboardHeight,
-      onContentBottomInsetUpdate,
-      size,
-    ])
-
-    React.useEffect(updateContentBottomInset)
-
     return (
-      <Animated.View
-        style={StyleSheet.flatten([
-          {
-            bottom: Animated.subtract(
-              keyboardHeight > 0
-                ? keyboardHeight + (spaceBetweenKeyboardAndAccessoryView ?? 0)
-                : 0,
-              deltaY.interpolate({
-                inputRange: [0, Number.MAX_SAFE_INTEGER],
-                outputRange: [0, Number.MAX_SAFE_INTEGER],
-                extrapolate: 'clamp',
-              })
-            ),
-          },
-          container,
-          style,
-        ])}
-        testID='container'
-      >
-        {renderBackgroundNode?.()}
-        <View
-          onLayout={onLayout}
-          style={StyleSheet.flatten([contentContainer, contentContainerStyle])}
+      <>
+        <View style={{ paddingBottom: offset }}>{renderScrollable()}</View>
+        <Animated.View
+          style={StyleSheet.flatten([
+            {
+              bottom: Animated.subtract(
+                keyboardHeight > 0
+                  ? keyboardHeight + (spaceBetweenKeyboardAndAccessoryView ?? 0)
+                  : 0,
+                deltaY.interpolate({
+                  inputRange: [0, Number.MAX_SAFE_INTEGER],
+                  outputRange: [0, Number.MAX_SAFE_INTEGER],
+                  extrapolate: 'clamp',
+                })
+              ),
+            },
+            container,
+            style,
+          ])}
+          testID='container'
         >
-          {children}
-        </View>
-      </Animated.View>
+          {renderBackgroundNode?.()}
+          <View
+            onLayout={onLayout}
+            style={StyleSheet.flatten([
+              contentContainer,
+              contentContainerStyle,
+            ])}
+          >
+            {children}
+          </View>
+        </Animated.View>
+      </>
     )
   }
 )
