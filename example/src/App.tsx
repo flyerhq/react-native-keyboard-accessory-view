@@ -1,10 +1,8 @@
-import {
-  KeyboardAccessoryView,
-  usePanResponder,
-} from '@flyerhq/react-native-keyboard-accessory-view'
+import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import React from 'react'
 import {
   FlatList,
+  GestureResponderHandlers,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -23,37 +21,28 @@ const data: Item[] = [...Array(20).keys()].map((value) => ({
 }))
 
 const App = () => {
-  const { panHandlers, positionY } = usePanResponder()
+  const keyExtractor = (item: Item) => item.id
 
-  const keyExtractor = React.useCallback((item: Item) => item.id, [])
-
-  const renderItem = React.useCallback(
-    ({ item }: { item: Item }) => (
-      <Text style={styles.text}>{item.message}</Text>
-    ),
-    []
+  const renderItem = ({ item }: { item: Item }) => (
+    <Text style={styles.text}>{item.message}</Text>
   )
 
-  const renderScrollable = React.useCallback(
-    () => (
-      <FlatList
-        data={data}
-        inverted
-        keyboardDismissMode='interactive'
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        {...panHandlers}
-      />
-    ),
-    [keyExtractor, panHandlers, renderItem]
+  const renderScrollable = (panHandlers: GestureResponderHandlers) => (
+    <FlatList
+      data={data}
+      inverted
+      keyboardDismissMode='interactive'
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      showsHorizontalScrollIndicator={false}
+      {...panHandlers}
+    />
   )
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <KeyboardAccessoryView
-          panResponderPositionY={positionY}
           renderScrollable={renderScrollable}
           style={styles.keyboardAccessoryView}
         >
