@@ -1,7 +1,18 @@
 import * as React from 'react'
-import { Animated, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import {
+  Animated,
+  GestureResponderHandlers,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useComponentSize, useKeyboardDimensions } from './hooks'
+import {
+  useComponentSize,
+  useKeyboardDimensions,
+  usePanResponder,
+} from './hooks'
 import styles from './styles'
 
 interface Props {
@@ -9,9 +20,8 @@ interface Props {
   contentContainerStyle?: StyleProp<ViewStyle>
   contentOffsetKeyboardClosed?: number
   contentOffsetKeyboardOpened?: number
-  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  panResponderPositionY?: Animated.Value
-  renderBackgroundNode?: () => React.ReactNode
+  renderBackground?: () => React.ReactNode
+  renderScrollable: (panHandlers: GestureResponderHandlers) => React.ReactNode
   spaceBetweenKeyboardAndAccessoryView?: number
   style?: StyleProp<ViewStyle>
   useListenersOnAndroid?: boolean
@@ -23,22 +33,35 @@ export const KeyboardAccessoryView = React.memo(
     contentContainerStyle,
     contentOffsetKeyboardClosed,
     contentOffsetKeyboardOpened,
-    onContentBottomInsetUpdate,
-    panResponderPositionY,
-    renderBackgroundNode,
+    renderBackground,
+    renderScrollable,
     spaceBetweenKeyboardAndAccessoryView,
     style,
     useListenersOnAndroid,
   }: Props) => {
+    const { onLayout, size } = useComponentSize()
     const { keyboardEndPositionY, keyboardHeight } = useKeyboardDimensions(
       useListenersOnAndroid
     )
-    const { onLayout, size } = useComponentSize()
+    const { panHandlers, positionY } = usePanResponder()
     const { bottom, left, right } = useSafeAreaInsets()
+
     const deltaY = Animated.subtract(
-      panResponderPositionY ?? new Animated.Value(0),
+      positionY,
       keyboardEndPositionY
-    )
+    ).interpolate({
+      inputRange: [0, Number.MAX_SAFE_INTEGER],
+      outputRange: [0, Number.MAX_SAFE_INTEGER],
+      extrapolate: 'clamp',
+    })
+
+    const offset =
+      size.height +
+      keyboardHeight +
+      (keyboardHeight > 0
+        ? (contentOffsetKeyboardOpened ?? 0) - bottom
+        : contentOffsetKeyboardClosed ?? 0)
+
     const { container, contentContainer } = styles({
       bottom,
       keyboardHeight,
@@ -46,53 +69,42 @@ export const KeyboardAccessoryView = React.memo(
       right,
     })
 
-    const updateContentBottomInset = React.useCallback(() => {
-      onContentBottomInsetUpdate?.(
-        size.height +
-          keyboardHeight +
-          (keyboardHeight > 0
-            ? (contentOffsetKeyboardOpened ?? 0) - bottom
-            : contentOffsetKeyboardClosed ?? 0)
-      )
-    }, [
-      bottom,
-      contentOffsetKeyboardClosed,
-      contentOffsetKeyboardOpened,
-      keyboardHeight,
-      onContentBottomInsetUpdate,
-      size,
-    ])
-
-    React.useEffect(updateContentBottomInset)
-
     return (
-      <Animated.View
-        style={StyleSheet.flatten([
-          {
-            bottom: Animated.subtract(
-              keyboardHeight > 0
-                ? keyboardHeight + (spaceBetweenKeyboardAndAccessoryView ?? 0)
-                : 0,
-              deltaY.interpolate({
-                inputRange: [0, Number.MAX_SAFE_INTEGER],
-                outputRange: [0, Number.MAX_SAFE_INTEGER],
-                extrapolate: 'clamp',
-              })
-            ),
-          },
-          container,
-          style,
-        ])}
-        testID='container'
-      >
-        {renderBackgroundNode?.()}
-        <View
-          onLayout={onLayout}
-          style={StyleSheet.flatten([contentContainer, contentContainerStyle])}
+      <>
+        <Animated.View
+          style={{
+            paddingBottom: Animated.subtract(offset, deltaY),
+          }}
         >
-          {children}
-        </View>
-      </Animated.View>
+          {renderScrollable(panHandlers)}
+        </Animated.View>
+        <Animated.View
+          style={StyleSheet.flatten([
+            {
+              bottom: Animated.subtract(
+                keyboardHeight > 0
+                  ? keyboardHeight + (spaceBetweenKeyboardAndAccessoryView ?? 0)
+                  : 0,
+                deltaY
+              ),
+            },
+            container,
+            style,
+          ])}
+          testID='container'
+        >
+          {renderBackground?.()}
+          <View
+            onLayout={onLayout}
+            style={StyleSheet.flatten([
+              contentContainer,
+              contentContainerStyle,
+            ])}
+          >
+            {children}
+          </View>
+        </Animated.View>
+      </>
     )
   }
 )
