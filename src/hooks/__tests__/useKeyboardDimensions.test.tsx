@@ -88,4 +88,20 @@ describe('useKeyboardDimensions', () => {
     expect(result.current.keyboardHeight).toStrictEqual(0)
     unmount()
   })
+
+  it('dont uses listeners on Android', () => {
+    expect.assertions(4)
+    const { result, unmount } = renderHook(() => useKeyboardDimensions(false))
+    act(() => {
+      emitter.emit('keyboardDidShow', keyboardOpenEvent)
+    })
+    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
+    expect(result.current.keyboardHeight).toStrictEqual(0)
+    act(() => {
+      emitter.emit('keyboardDidHide', keyboardHideEvent)
+    })
+    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
+    expect(result.current.keyboardHeight).toStrictEqual(0)
+    unmount()
+  })
 })
