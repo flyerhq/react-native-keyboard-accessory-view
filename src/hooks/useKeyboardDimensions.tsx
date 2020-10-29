@@ -21,44 +21,53 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context'
  */
 export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
   const { height } = useSafeAreaFrame()
-  const [keyboardEndPositionY, setKeyboardEndPositionY] = React.useState(height)
-  const [keyboardHeight, setKeyboardHeight] = React.useState(0)
+  const [state, setState] = React.useState({
+    keyboardEndPositionY: height,
+    keyboardHeight: 0,
+  })
 
   React.useEffect(() => {
-    const handleDimensionsChange = (event: {
-      screen: ScaledSize
-      window: ScaledSize
-    }) => {
-      setKeyboardEndPositionY(event.window.height)
+    const handleDimensionsChange = ({ window }: { window: ScaledSize }) => {
+      setState((cur) => ({
+        keyboardEndPositionY: window.height,
+        keyboardHeight: cur.keyboardHeight,
+      }))
     }
 
-    const resetKeyboardDimensions = () => {
-      setKeyboardEndPositionY(height)
-      setKeyboardHeight(0)
-    }
+    const resetKeyboardDimensions = () =>
+      setState({
+        keyboardEndPositionY: height,
+        keyboardHeight: 0,
+      })
 
     const updateKeyboardDimensions = (event: KeyboardEvent) => {
-      const { duration, easing, endCoordinates } = event
+      setState((cur) => {
+        const { screenY } = event.endCoordinates
+        const newKeyboardHeight = height - screenY
+        if (newKeyboardHeight === cur.keyboardHeight) {
+          return cur
+        }
 
-      const newKeyboardHeight = height - endCoordinates.screenY
+        const { duration, easing } = event
+        if (duration && easing) {
+          // We have to pass the duration equal to minimal
+          // accepted duration defined here: RCTLayoutAnimation.m
+          const animationDuration = Math.max(duration, 10)
 
-      if (newKeyboardHeight === keyboardHeight) return
-
-      if (duration && easing) {
-        // We have to pass the duration equal to minimal accepted duration defined here: RCTLayoutAnimation.m
-        const animationDuration = Math.max(duration, 10)
-
-        LayoutAnimation.configureNext({
-          duration: animationDuration,
-          update: {
+          LayoutAnimation.configureNext({
             duration: animationDuration,
-            type: LayoutAnimation.Types[easing],
-          },
-        })
-      }
+            update: {
+              duration: animationDuration,
+              type: LayoutAnimation.Types[easing],
+            },
+          })
+        }
 
-      setKeyboardEndPositionY(endCoordinates.screenY)
-      setKeyboardHeight(newKeyboardHeight)
+        return {
+          keyboardEndPositionY: screenY,
+          keyboardHeight: newKeyboardHeight,
+        }
+      })
     }
 
     Dimensions.addEventListener('change', handleDimensionsChange)
@@ -83,7 +92,7 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
       Dimensions.removeEventListener('change', handleDimensionsChange)
       listeners.forEach((listener) => listener.remove())
     }
-  })
+  }, [height])
 
-  return { keyboardEndPositionY, keyboardHeight }
+  return state
 }
