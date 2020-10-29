@@ -74,11 +74,13 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
 
     const listeners: EmitterSubscription[] = []
 
-    if (Platform.OS === 'android' && useListenersOnAndroid) {
-      listeners.push(
-        Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
-        Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
-      )
+    if (Platform.OS === 'android') {
+      if (useListenersOnAndroid) {
+        listeners.push(
+          Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
+          Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
+        )
+      }
     } else {
       listeners.push(
         Keyboard.addListener(
@@ -92,7 +94,7 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
       Dimensions.removeEventListener('change', handleDimensionsChange)
       listeners.forEach((listener) => listener.remove())
     }
-  }, [height])
+  }, [height, useListenersOnAndroid])
 
   return state
 }
