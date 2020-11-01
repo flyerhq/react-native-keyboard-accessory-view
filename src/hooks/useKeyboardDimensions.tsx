@@ -27,12 +27,11 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
   })
 
   React.useEffect(() => {
-    const handleDimensionsChange = ({ window }: { window: ScaledSize }) => {
-      setState((cur) => ({
+    const handleDimensionsChange = ({ window }: { window: ScaledSize }) =>
+      setState((current) => ({
+        ...current,
         keyboardEndPositionY: window.height,
-        keyboardHeight: cur.keyboardHeight,
       }))
-    }
 
     const resetKeyboardDimensions = () =>
       setState({
@@ -40,15 +39,17 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
         keyboardHeight: 0,
       })
 
-    const updateKeyboardDimensions = (event: KeyboardEvent) => {
-      setState((cur) => {
-        const { screenY } = event.endCoordinates
-        const newKeyboardHeight = height - screenY
-        if (newKeyboardHeight === cur.keyboardHeight) {
-          return cur
+    const updateKeyboardDimensions = (event: KeyboardEvent) =>
+      setState((current) => {
+        const { screenY: keyboardEndPositionY } = event.endCoordinates
+        const keyboardHeight = height - keyboardEndPositionY
+
+        if (keyboardHeight === current.keyboardHeight) {
+          return current
         }
 
         const { duration, easing } = event
+
         if (duration && easing) {
           // We have to pass the duration equal to minimal
           // accepted duration defined here: RCTLayoutAnimation.m
@@ -64,23 +65,20 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
         }
 
         return {
-          keyboardEndPositionY: screenY,
-          keyboardHeight: newKeyboardHeight,
+          keyboardEndPositionY,
+          keyboardHeight,
         }
       })
-    }
 
     Dimensions.addEventListener('change', handleDimensionsChange)
 
     const listeners: EmitterSubscription[] = []
 
-    if (Platform.OS === 'android') {
-      if (useListenersOnAndroid) {
-        listeners.push(
-          Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
-          Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
-        )
-      }
+    if (Platform.OS === 'android' && useListenersOnAndroid) {
+      listeners.push(
+        Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
+        Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
+      )
     } else {
       listeners.push(
         Keyboard.addListener(
