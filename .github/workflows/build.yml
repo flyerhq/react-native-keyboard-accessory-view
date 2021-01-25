@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 15.x
 
       - name: Restore cache
         id: cache
@@ -33,7 +33,7 @@ jobs:
       - run: yarn type-coverage
 
       - name: Coverage
-        uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         with:
