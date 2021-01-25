@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
+
 import { usePanResponder } from '../usePanResponder'
 
 describe('usePanResponder', () => {
@@ -7,7 +8,6 @@ describe('usePanResponder', () => {
     const { result } = renderHook(() => usePanResponder())
     // Ignore `__getValue()` because it is a hidden property and
     // there is no other way to get a plain value from the Animated one
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(result.current.positionY.__getValue()).toStrictEqual(0)
   })

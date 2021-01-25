@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { NativeEventEmitter } from 'react-native'
+
 import {
   keyboardHideEvent,
   keyboardOpenEvent,

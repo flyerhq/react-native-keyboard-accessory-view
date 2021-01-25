@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
 import { NativeEventEmitter, ScrollView } from 'react-native'
+
 import { keyboardOpenEvent } from '../../jest/fixtures'
 import { KeyboardAccessoryView } from '../KeyboardAccessoryView'
 
