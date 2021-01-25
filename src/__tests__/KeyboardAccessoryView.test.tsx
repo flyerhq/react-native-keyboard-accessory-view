@@ -7,6 +7,8 @@ import { KeyboardAccessoryView } from '../KeyboardAccessoryView'
 
 const emitter = new NativeEventEmitter()
 
+jest.useFakeTimers()
+
 describe('keyboard accessory view', () => {
   it('sticks to the bottom with a closed keyboard', () => {
     expect.assertions(1)
