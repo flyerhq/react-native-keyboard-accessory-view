@@ -62,6 +62,8 @@ Lastly, validate if the content above the accessory view has correct offsets, if
 
 - `renderBackground` (optional) - accepts a function returning React node. This is useful when you want to have a custom node as a background (e.g. `<ImageBackground style={StyleSheet.absoluteFill} />` ). Remember about absolute positioning.
 
+- `scrollableContainerStyle` (optional) - accepts [View Style Props](https://reactnative.dev/docs/view-style-props). Use to style the container wrapping a scrollable component passed in `renderScrollable`. In case you want scrollable to fill the entire container try passing `flex: 1` here.
+
 - `spaceBetweenKeyboardAndAccessoryView` (optional) - accepts a number. Use to adjust space between the accessory view and the keyboard, when the latter is open. Read more [here](#handling-wrong-offsets).
 
 - `useListenersOnAndroid` (optional) - accepts a boolean. By default, Android OS will resize the window when the keyboard is open and accessory view will automatically be positioned above the keyboard. This behavior can be amended, so if for some reason accessory view doesn't appear on top of the keyboard, try setting this prop, it will calculate the content height based on a keyboard listener. Has no impact on iOS.

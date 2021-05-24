@@ -23,6 +23,7 @@ interface Props {
   contentOffsetKeyboardOpened?: number
   renderBackground?: () => React.ReactNode
   renderScrollable: (panHandlers: GestureResponderHandlers) => React.ReactNode
+  scrollableContainerStyle?: StyleProp<ViewStyle>
   spaceBetweenKeyboardAndAccessoryView?: number
   style?: StyleProp<ViewStyle>
   useListenersOnAndroid?: boolean
@@ -36,6 +37,7 @@ export const KeyboardAccessoryView = React.memo(
     contentOffsetKeyboardOpened,
     renderBackground,
     renderScrollable,
+    scrollableContainerStyle,
     spaceBetweenKeyboardAndAccessoryView,
     style,
     useListenersOnAndroid,
@@ -73,9 +75,13 @@ export const KeyboardAccessoryView = React.memo(
     return (
       <>
         <Animated.View
-          style={{
-            paddingBottom: Animated.subtract(offset, deltaY),
-          }}
+          style={StyleSheet.flatten([
+            {
+              flex: 1,
+              paddingBottom: Animated.subtract(offset, deltaY),
+            },
+            scrollableContainerStyle,
+          ])}
         >
           {renderScrollable(panHandlers)}
         </Animated.View>
