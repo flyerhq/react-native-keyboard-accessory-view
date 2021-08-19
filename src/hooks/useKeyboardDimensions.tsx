@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
   Dimensions,
-  EmitterSubscription,
+  EventSubscription,
   Keyboard,
   KeyboardEvent,
   LayoutAnimation,
@@ -70,17 +70,20 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
         }
       })
 
-    Dimensions.addEventListener('change', handleDimensionsChange)
+    const dimensionsListener = Dimensions.addEventListener(
+      'change',
+      handleDimensionsChange
+    )
 
-    const listeners: EmitterSubscription[] = []
+    const keyboardListeners: EventSubscription[] = []
 
     if (Platform.OS === 'android' && useListenersOnAndroid) {
-      listeners.push(
+      keyboardListeners.push(
         Keyboard.addListener('keyboardDidHide', resetKeyboardDimensions),
         Keyboard.addListener('keyboardDidShow', updateKeyboardDimensions)
       )
     } else {
-      listeners.push(
+      keyboardListeners.push(
         Keyboard.addListener(
           'keyboardWillChangeFrame',
           updateKeyboardDimensions
@@ -89,8 +92,10 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
     }
 
     return () => {
-      Dimensions.removeEventListener('change', handleDimensionsChange)
-      listeners.forEach((listener) => listener.remove())
+      // Wait for React Native types update
+      // @ts-ignore
+      dimensionsListener.remove()
+      keyboardListeners.forEach((listener) => listener.remove())
     }
   }, [height, useListenersOnAndroid])
 
