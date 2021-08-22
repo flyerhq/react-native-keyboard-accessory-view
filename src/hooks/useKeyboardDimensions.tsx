@@ -92,10 +92,13 @@ export const useKeyboardDimensions = (useListenersOnAndroid?: boolean) => {
     }
 
     return () => {
-      // Wait for React Native types update
-      // @ts-ignore
-      dimensionsListener.remove()
       keyboardListeners.forEach((listener) => listener.remove())
+      // Since RN 0.65 we need to call `remove` on the listener, but on previous RN verisons it will result in a crash
+      /* istanbul ignore next */ // @ts-ignore
+      dimensionsListener
+        ? // @ts-ignore
+          dimensionsListener.remove()
+        : Dimensions.removeEventListener('change', handleDimensionsChange)
     }
   }, [height, useListenersOnAndroid])
 
