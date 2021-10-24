@@ -9,7 +9,7 @@ describe('usePanResponder', () => {
     // Ignore `__getValue()` because it is a hidden property and
     // there is no other way to get a plain value from the Animated one
     // @ts-ignore
-    expect(result.current.positionY.__getValue()).toStrictEqual(0)
+    expect(result.current.positionY.__getValue()).toBe(0)
   })
 
   it('returns empty object instead of pan handlers on Android', () => {

@@ -17,13 +17,13 @@ describe('useKeyboardDimensions', () => {
     act(() => {
       emitter.emit('keyboardWillChangeFrame', keyboardOpenEvent)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(550)
-    expect(result.current.keyboardHeight).toStrictEqual(346)
+    expect(result.current.keyboardEndPositionY).toBe(550)
+    expect(result.current.keyboardHeight).toBe(346)
     act(() => {
       emitter.emit('keyboardWillChangeFrame', keyboardHideEvent)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
-    expect(result.current.keyboardHeight).toStrictEqual(0)
+    expect(result.current.keyboardEndPositionY).toBe(896)
+    expect(result.current.keyboardHeight).toBe(0)
     unmount()
   })
 
@@ -37,8 +37,8 @@ describe('useKeyboardDimensions', () => {
     act(() => {
       emitter.emit('keyboardWillChangeFrame', event)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(550)
-    expect(result.current.keyboardHeight).toStrictEqual(346)
+    expect(result.current.keyboardEndPositionY).toBe(550)
+    expect(result.current.keyboardHeight).toBe(346)
   })
 
   it('skips dimensions update if keyboard height does not change', () => {
@@ -54,8 +54,8 @@ describe('useKeyboardDimensions', () => {
     act(() => {
       emitter.emit('keyboardWillChangeFrame', event)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
-    expect(result.current.keyboardHeight).toStrictEqual(0)
+    expect(result.current.keyboardEndPositionY).toBe(896)
+    expect(result.current.keyboardHeight).toBe(0)
   })
 
   it('sets correct keyboardEndPositionY when device orientation changes', () => {
@@ -67,7 +67,7 @@ describe('useKeyboardDimensions', () => {
         window: scaledSize,
       })
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(414)
+    expect(result.current.keyboardEndPositionY).toBe(414)
   })
 
   it('uses listeners on Android', () => {
@@ -80,13 +80,13 @@ describe('useKeyboardDimensions', () => {
     act(() => {
       emitter.emit('keyboardDidShow', keyboardOpenEvent)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(550)
-    expect(result.current.keyboardHeight).toStrictEqual(346)
+    expect(result.current.keyboardEndPositionY).toBe(550)
+    expect(result.current.keyboardHeight).toBe(346)
     act(() => {
       emitter.emit('keyboardDidHide', keyboardHideEvent)
     })
-    expect(result.current.keyboardEndPositionY).toStrictEqual(896)
-    expect(result.current.keyboardHeight).toStrictEqual(0)
+    expect(result.current.keyboardEndPositionY).toBe(896)
+    expect(result.current.keyboardHeight).toBe(0)
     unmount()
   })
 })
