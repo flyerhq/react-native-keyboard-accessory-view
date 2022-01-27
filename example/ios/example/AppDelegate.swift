@@ -1,5 +1,5 @@
 import UIKit
-#if DEBUG
+#if DEBUG && FB_SONARKIT_ENABLED
 import FlipperKit
 #endif
 
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
   }
 
   private func initializeFlipper(with application: UIApplication) {
-    #if DEBUG
+    #if DEBUG && FB_SONARKIT_ENABLED
     let client = FlipperClient.shared()
     let layoutDescriptionMapper = SKDescriptorMapper(defaults: ())
     client?.add(FlipperKitLayoutPlugin(rootNode: application, with: layoutDescriptionMapper))

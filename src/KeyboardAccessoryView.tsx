@@ -14,7 +14,6 @@ import {
   useKeyboardDimensions,
   usePanResponder,
 } from './hooks'
-import styles from './styles'
 
 interface Props {
   children?: React.ReactNode
@@ -65,28 +64,22 @@ export const KeyboardAccessoryView = React.memo(
         ? (contentOffsetKeyboardOpened ?? 0) - bottom
         : contentOffsetKeyboardClosed ?? 0)
 
-    const { container, contentContainer } = styles({
-      bottom,
-      keyboardHeight,
-      left,
-      right,
-    })
-
     return (
       <>
         <Animated.View
-          style={StyleSheet.flatten([
+          style={[
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               flex: 1,
               paddingBottom: Animated.subtract(offset, deltaY),
             },
             scrollableContainerStyle,
-          ])}
+          ]}
         >
           {renderScrollable(panHandlers)}
         </Animated.View>
         <Animated.View
-          style={StyleSheet.flatten([
+          style={[
             {
               bottom: Animated.subtract(
                 keyboardHeight > 0
@@ -95,18 +88,24 @@ export const KeyboardAccessoryView = React.memo(
                 deltaY
               ),
             },
-            container,
+            styles.container,
             style,
-          ])}
+          ]}
           testID='container'
         >
           {renderBackground?.()}
           <View
             onLayout={onLayout}
-            style={StyleSheet.flatten([
-              contentContainer,
+            style={[
+              styles.contentContainer,
+              // eslint-disable-next-line react-native/no-inline-styles
+              {
+                marginBottom: keyboardHeight > 0 ? 0 : bottom,
+                marginLeft: left,
+                marginRight: right,
+              },
               contentContainerStyle,
-            ])}
+            ]}
           >
             {children}
           </View>
@@ -115,3 +114,14 @@ export const KeyboardAccessoryView = React.memo(
     )
   }
 )
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+  },
+  contentContainer: {
+    flex: 1,
+  },
+})
