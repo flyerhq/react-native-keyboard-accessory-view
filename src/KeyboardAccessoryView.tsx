@@ -41,7 +41,7 @@ export const KeyboardAccessoryView = React.memo(
     style,
     useListenersOnAndroid,
   }: Props) => {
-    const { onLayout, size } = useComponentSize()
+    const { onLayout, size, preLayout } = useComponentSize()
     const { keyboardEndPositionY, keyboardHeight } = useKeyboardDimensions(
       useListenersOnAndroid
     )
@@ -88,7 +88,7 @@ export const KeyboardAccessoryView = React.memo(
                 deltaY
               ),
             },
-            styles.container,
+            preLayout ? {} : styles.container, // initial render, position is relative, so scrollable starts at right position on first render
             style,
           ]}
           testID='container'
@@ -105,6 +105,8 @@ export const KeyboardAccessoryView = React.memo(
                 marginRight: right,
               },
               contentContainerStyle,
+              // eslint-disable-next-line react-native/no-inline-styles
+              preLayout ? { flex: 0 } : {}, // initial render sets flex to 0, so flex-basis is auto & and its size is determined by children
             ]}
           >
             {children}

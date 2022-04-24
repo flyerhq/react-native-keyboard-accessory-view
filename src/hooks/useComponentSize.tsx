@@ -10,11 +10,13 @@ import { LayoutChangeEvent } from 'react-native'
  */
 export const useComponentSize = () => {
   const [size, setSize] = React.useState({ height: 0, width: 0 })
+  const [preLayout, setPreLayout] = React.useState(true)
 
   const onLayout = React.useCallback((event: LayoutChangeEvent) => {
+    setPreLayout(false)
     const { height, width } = event.nativeEvent.layout
     setSize({ height, width })
   }, [])
 
-  return { onLayout, size }
+  return { onLayout, size, preLayout }
 }
