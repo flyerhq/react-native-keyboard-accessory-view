@@ -1,5 +1,9 @@
 # React Native Keyboard Accessory View
 
+⚠️⚠️⚠️ Deprected - see facebook/react-native#31402 on how to natively create this effect (works for React Native 0.68+) ⚠️⚠️⚠️
+
+<br />
+
 [![npm](https://img.shields.io/npm/v/@flyerhq/react-native-keyboard-accessory-view)](https://www.npmjs.com/package/@flyerhq/react-native-keyboard-accessory-view)
 [![build](https://github.com/flyerhq/react-native-keyboard-accessory-view/workflows/build/badge.svg)](https://github.com/flyerhq/react-native-keyboard-accessory-view/actions?query=workflow%3Abuild)
 [![Maintainability](https://api.codeclimate.com/v1/badges/642bed5d3abacc8b750e/maintainability)](https://codeclimate.com/github/flyerhq/react-native-keyboard-accessory-view/maintainability)
